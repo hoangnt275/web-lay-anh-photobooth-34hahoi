@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thư viện ảnh | Foto.latter</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Montserrat:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            :root {
+                --bg-color: #2e1214;
+                --text-color: #f7f5f0;
+                --border-color: #4a2527;
+                --accent-color: #f7f5f0;
+            }
+
+            body {
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                font-family: "Montserrat", sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            /* --- HEADER CHÍNH --- */
+            header {
+                padding: 50px 20px 30px;
+                text-align: center;
+            }
+
+            .logo-text {
+                font-family: "Monsieur La Doulaise", cursive;
+                font-size: 5.5rem;
+                font-weight: 400;
+                margin: 0;
+                line-height: 0.8;
+                letter-spacing: 2px;
+            }
+
+            .brand-subtitle {
+                font-family: "Montserrat", sans-serif;
+                font-size: 0.8rem;
+                font-weight: 700;
+                letter-spacing: 3px;
+                margin-top: 5px;
+            }
+
+            p.subtitle {
+                font-family: "Playfair Display", serif;
+                font-style: italic;
+                color: #d3cfc3;
+                margin-top: 15px;
+                font-size: 1.1rem;
+            }
+
+            .instruction-text {
+                font-family: "Montserrat", sans-serif;
+                font-size: 0.85rem;
+                color: #d3cfc3;
+                margin-bottom: 25px;
+                letter-spacing: 0.5px;
+            }
+
+            /* --- KHU VỰC NỘI DUNG --- */
+            .container {
+                flex: 1;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                text-align: center;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .section-title {
+                font-family: "Playfair Display", serif;
+                font-size: 2rem;
+                margin-bottom: 10px;
+                font-weight: 400;
+                border-bottom: 1px solid var(--border-color);
+                display: inline-block;
+                padding-bottom: 10px;
+            }
+
+            /* Khu vực Ảnh Final */
+            .final-section {
+                margin-bottom: 60px;
+            }
+
+            .final-photo-wrapper {
+                max-width: 500px;
+                margin: 0 auto 25px;
+                background: #fff;
+                padding: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            }
+
+            .final-photo-wrapper img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            /* Lưới hiển thị toàn bộ ảnh gốc */
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 20px;
+                margin-top: 10px;
+            }
+
+            .gallery-item {
+                position: relative;
+                aspect-ratio: 2/3;
+                overflow: hidden;
+                background-color: var(--border-color);
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+
+            .gallery-item:active {
+                transform: scale(0.98);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            /* --- MÀN HÌNH LỖI --- */
+            #error-container {
+                display: none;
+                flex: 1;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 40px 20px;
+                text-align: center;
+            }
+
+            #error-container p {
+                font-family: "Playfair Display", serif;
+                font-size: 1.3rem;
+                line-height: 1.8;
+                color: #d3cfc3;
+            }
+
+            #error-container a {
+                color: #fff;
+                font-weight: bold;
+                text-decoration: underline;
+                letter-spacing: 1px;
+            }
+
+            /* --- FOOTER --- */
+            footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                padding: 40px 50px;
+                border-top: 1px solid var(--border-color);
+                margin-top: 50px;
+            }
+
+            .footer-left {
+                text-align: left;
+            }
+
+            .quote-text {
+                font-family: "Monsieur La Doulaise", cursive;
+                font-size: 3rem;
+                margin-bottom: 10px;
+                line-height: 1;
+            }
+
+            .address-text {
+                font-size: 0.8rem;
+                font-weight: 700;
+                line-height: 1.6;
+                letter-spacing: 1px;
+            }
+
+            .footer-right {
+                text-align: right;
+            }
+
+            .copyright-label {
+                font-size: 0.7rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                margin-bottom: 0px;
+            }
+
+            .copyright-logo {
+                font-family: "Monsieur La Doulaise", cursive;
+                font-size: 3.5rem;
+                line-height: 0.8;
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+            }
+
+            /* Khung xem ảnh phóng to (Lightbox) */
+            #lightbox {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(15, 5, 5, 0.95);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            #lightbox img {
+                max-width: 90%;
+                max-height: 80vh;
+                border: 8px solid #fff;
+                /* Chống click nhầm ra ngoài khi đang giữ ảnh */
+                pointer-events: auto;
+            }
+
+            #lightbox .close-btn {
+                position: absolute;
+                top: 20px;
+                right: 30px;
+                color: #fff;
+                font-size: 2.5rem;
+                cursor: pointer;
+            }
+
+            .lightbox-instruction {
+                color: rgba(255, 255, 255, 0.8);
+                font-family: "Montserrat", sans-serif;
+                font-size: 0.85rem;
+                margin-bottom: 15px;
+                letter-spacing: 1px;
+            }
+
+            /* --- RESPONSIVE CHO ĐIỆN THOẠI --- */
+            @media (max-width: 768px) {
+                .logo-text {
+                    font-size: 4rem;
+                }
+
+                footer {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    padding: 30px 20px;
+                    gap: 30px;
+                }
+
+                .footer-left,
+                .footer-right {
+                    text-align: center;
+                }
+
+                .quote-text {
+                    font-size: 2.5rem;
+                }
+                .address-text {
+                    font-size: 0.7rem;
+                }
+            }
+
+            @media (max-width: 600px) {
+                .gallery-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1 class="logo-text">Foto latter</h1>
+            <div class="brand-subtitle">VINTAGE PHOTOBOOTH</div>
+            <p class="subtitle" id="session-title">Đang tải dữ liệu...</p>
+        </header>
+
+        <div id="error-container">
+            <p>
+                Vui lòng liên hệ với foto.latter qua ig
+                <a href="https://www.instagram.com/foto.latter/" target="_blank"
+                    >@foto.latter</a
+                >
+                để lấy ảnh.
+            </p>
+        </div>
+
+        <main class="container" id="main-content">
+            <div class="final-section" id="final-section">
+                <h2 class="section-title">The Final Cut</h2>
+                <div class="instruction-text">
+                    (Nhấn giữ vào ảnh để tải về máy)
+                </div>
+                <div class="final-photo-wrapper">
+                    <img id="final-img" src="" alt="Ảnh ghép Final" />
+                </div>
+            </div>
+
+            <div id="raw-section">
+                <h2 class="section-title">The Raw Collection</h2>
+                <div class="instruction-text">
+                    Toàn bộ ảnh chụp trong phiên (Nhấn vào ảnh để xem lớn, nhấn
+                    giữ để tải về máy)
+                </div>
+                <div class="gallery-grid" id="photo-grid"></div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-left">
+                <div class="quote-text">"Timeless moments, truly told"</div>
+                <div class="address-text">
+                    CƠ SỞ 01: 333 HOÀNG LIÊN, LÀO CAI
+                </div>
+                <div class="address-text">CƠ SỞ 02: 34 XÓM HẠ HỒI, HÀ NỘI</div>
+            </div>
+            <div class="footer-right">
+                <div class="copyright-label">COPYRIGHT BY</div>
+                <div class="copyright-logo">foto.latter</div>
+            </div>
+        </footer>
+
+        <div id="lightbox">
+            <span class="close-btn" onclick="closeLightbox()">&times;</span>
+            <div class="lightbox-instruction">
+                (Nhấn giữ vào ảnh để tải về máy)
+            </div>
+            <img id="lightbox-img" src="" alt="Zoomed" />
+        </div>
+
+        <script>
+            const R2_BASE_URL = "https://r2.fotolatter.me";
+            const path = window.location.pathname.replace(/^\/|\/$/g, "");
+            const sessionCode = path;
+
+            const mainContent = document.getElementById("main-content");
+            const errorContainer = document.getElementById("error-container");
+            const sessionTitle = document.getElementById("session-title");
+            const grid = document.getElementById("photo-grid");
+
+            function triggerErrorState() {
+                mainContent.style.display = "none";
+                errorContainer.style.display = "flex";
+                sessionTitle.innerText = "";
+            }
+
+            function checkImageExists(url) {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.onload = () => resolve(true);
+                    img.onerror = () => resolve(false);
+                    img.src = url;
+                });
+            }
+
+            async function initGallery() {
+                if (!sessionCode) {
+                    triggerErrorState();
+                    return;
+                }
+
+                const finalUrl = `${R2_BASE_URL}/${sessionCode}/final.jpg`;
+                const raw1Url = `${R2_BASE_URL}/${sessionCode}/1.jpg`;
+
+                const [hasFinal, hasRaw] = await Promise.all([
+                    checkImageExists(finalUrl),
+                    checkImageExists(raw1Url),
+                ]);
+
+                if (!hasFinal && !hasRaw) {
+                    triggerErrorState();
+                    return;
+                }
+
+                sessionTitle.innerText = `Session: #${sessionCode}`;
+
+                if (hasFinal) {
+                    document.getElementById("final-img").src = finalUrl;
+                } else {
+                    document.getElementById("final-section").style.display =
+                        "none";
+                }
+
+                if (hasRaw) {
+                    loadNextPhoto(1);
+                } else {
+                    document.getElementById("raw-section").style.display =
+                        "none";
+                }
+            }
+
+            function loadNextPhoto(index) {
+                const maxPhotos = 150;
+                if (index > maxPhotos) return;
+
+                const photoUrl = `${R2_BASE_URL}/${sessionCode}/${index}.jpg`;
+
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "gallery-item";
+                itemDiv.style.display = "none";
+                itemDiv.onclick = () => openLightbox(photoUrl);
+
+                const img = document.createElement("img");
+                img.alt = `Photo ${index}`;
+
+                itemDiv.appendChild(img);
+                grid.appendChild(itemDiv);
+
+                img.onload = function () {
+                    itemDiv.style.display = "block";
+                    loadNextPhoto(index + 1);
+                };
+
+                img.onerror = function () {
+                    itemDiv.remove();
+                };
+
+                img.src = photoUrl;
+            }
+
+            initGallery();
+
+            /* --- LIGHTBOX --- */
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+
+            function openLightbox(src) {
+                lightboxImg.src = src;
+                lightbox.style.display = "flex";
+            }
+
+            function closeLightbox() {
+                lightbox.style.display = "none";
+            }
+
+            // Đóng lightbox khi bấm ra ngoài vùng ảnh
+            lightbox.addEventListener("click", function (e) {
+                if (
+                    e.target === lightbox ||
+                    e.target.className === "lightbox-instruction"
+                ) {
+                    closeLightbox();
+                }
+            });
+        </script>
+    </body>
+</html>
