@@ -374,34 +374,23 @@
                     return;
                 }
 
-                const finalUrl = `${R2_BASE_URL}/${sessionCode}/photo_1.jpg`;
-                const raw1Url = `${R2_BASE_URL}/${sessionCode}/photo_2.jpg`;
+                // Vì lưu kiểu tuần tự, ta chỉ cần check xem photo_1.jpg có tồn tại không
+                const firstPhotoUrl = `${R2_BASE_URL}/${sessionCode}/photo_1.jpg`;
+                const hasPhotos = await checkImageExists(firstPhotoUrl);
 
-                const [hasFinal, hasRaw] = await Promise.all([
-                    checkImageExists(finalUrl),
-                    checkImageExists(raw1Url),
-                ]);
-
-                if (!hasFinal && !hasRaw) {
+                // Nếu không có tấm số 1 -> Báo lỗi mã không tồn tại
+                if (!hasPhotos) {
                     triggerErrorState();
                     return;
                 }
 
                 sessionTitle.innerText = `Session: #${sessionCode}`;
 
-                if (hasFinal) {
-                    document.getElementById("final-img").src = finalUrl;
-                } else {
-                    document.getElementById("final-section").style.display =
-                        "none";
-                }
+                // Ẩn hoàn toàn khu vực Ảnh ghép (The Final Cut)
+                document.getElementById("final-section").style.display = "none";
 
-                if (hasRaw) {
-                    loadNextPhoto(2);
-                } else {
-                    document.getElementById("raw-section").style.display =
-                        "none";
-                }
+                // Bắt đầu tải toàn bộ ảnh vào lưới Raw Collection, bắt đầu từ số 1
+                loadNextPhoto(1);
             }
 
             function loadNextPhoto(index) {
