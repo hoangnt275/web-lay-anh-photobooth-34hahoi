@@ -374,8 +374,8 @@
                     return;
                 }
 
-                const finalUrl = `${R2_BASE_URL}/${sessionCode}/final.jpg`;
-                const raw1Url = `${R2_BASE_URL}/${sessionCode}/1.jpg`;
+                const finalUrl = `${R2_BASE_URL}/${sessionCode}/photo_1.jpg`;
+                const raw1Url = `${R2_BASE_URL}/${sessionCode}/photo_2.jpg`;
 
                 const [hasFinal, hasRaw] = await Promise.all([
                     checkImageExists(finalUrl),
@@ -397,7 +397,7 @@
                 }
 
                 if (hasRaw) {
-                    loadNextPhoto(1);
+                    loadNextPhoto(2);
                 } else {
                     document.getElementById("raw-section").style.display =
                         "none";
@@ -408,7 +408,7 @@
                 const maxPhotos = 150;
                 if (index > maxPhotos) return;
 
-                const photoUrl = `${R2_BASE_URL}/${sessionCode}/${index}.jpg`;
+                const photoUrl = `${R2_BASE_URL}/${sessionCode}/photo_${index}.jpg`;
 
                 const itemDiv = document.createElement("div");
                 itemDiv.className = "gallery-item";
